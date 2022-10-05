@@ -1,0 +1,34 @@
+<form #myForm="ngForm" (ngSubmit)="myForm.valid && onSubmit()">
+  <fieldset>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" [(ngModel)]="user.email" #email="ngModel" required>
+  </fieldset>
+
+  <div *ngIf="myForm.submitted && email.errors">
+    <span *ngIf="email.errors?.['required']">L'email est requis</span>
+  </div>
+
+  <fieldset>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" [(ngModel)]="user.password" #password="ngModel" required minlength="6">
+  </fieldset>
+
+  <div *ngIf="myForm.submitted && password.errors">
+    <span *ngIf="password.errors?.['required']">Le mot de passe est requis</span>
+    <span *ngIf="password.errors?.['minlength']">6 caratères minimum</span>
+  </div>
+
+  <div *ngIf="myForm.submitted && !password.errors && !email.errors">
+    <img src="assets/image/denis.gif">
+    <audio controls autoplay hidden src="assets/sound/Ah.mp3"></audio>
+
+  </div>
+
+  <div *ngIf="!password.errors && !email.errors then showButton else hideButton"> </div>
+    <ng-template #showButton>
+      <button type="submit">Inscription</button>
+    </ng-template>
+    <ng-template #hideButton>
+      <button type="submit" disabled>Inscription</button>
+    </ng-template>
+</form>
